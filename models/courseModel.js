@@ -1,0 +1,77 @@
+const mongoose=require("mongoose");
+
+let courseSchema=new mongoose.Schema({
+    title:{
+        type:String,
+        trim:true,
+        minlength:3,
+        maxlength:350,
+        required:true,
+    },
+    slug:{
+        type:String,
+        required:true,
+    },
+    description:{
+        type:String,
+        required:true,
+        minlength:3,
+        maxlength:5000
+    },
+    image:{
+        type:String,
+        default:"https://www.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-260nw-1037719192.jpg"
+    },
+    price:{
+        type:Number,
+        default:0
+    },
+    category:{
+        type:String,
+        required:true
+    },
+    published:{
+        type:Boolean,
+        default:true
+    },
+    paid:{
+        type:Boolean,
+        default:false
+    },
+    instructor:{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:"User",
+        required:true
+    },
+    lessons:[{
+        type:mongoose.SchemaTypes.ObjectId,
+        ref:"Lesson"
+    }],
+    totalHours:{
+        type:String,
+        required:true,
+        default:0
+    },
+    enrolls:{
+        type:String,
+        required:true,
+        default:0
+    },
+    ratings:[{
+        starts:Number,
+        comment:String,
+        postedBy:{
+            type:mongoose.SchemaTypes.ObjectId,
+            ref:"User"
+        }
+    }],
+    totalRatings:{
+        type:Number,
+        required:true,
+        default:0
+    }
+},{
+    timestamps:true
+})
+
+module.exports=mongoose.model("Course",courseSchema)
